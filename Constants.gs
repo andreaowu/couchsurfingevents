@@ -8,7 +8,7 @@ const rowItemsCount = 5; // number of items in the spreadsheet
 
 // should use a class for this instead of an array with indices
 const itemToIndexMapping = {
-  'startDate': 0, 
+  'startDate': 0, // string
   'day': 1, 
   'time': 2, 
   'location': 3, 
@@ -22,8 +22,10 @@ const itemToIndexMapping = {
 }
 
 // getting Google sheet and calendar
-const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+const activeSheet = SpreadsheetApp.getActiveSpreadsheet();
+const sheets = activeSheet.getSheets();
 const calendar = CalendarApp.getCalendarById(calendarId);
+const todaySheet = activeSheet.getSheetByName("Today");
 
 // setting dates to be used for today and one month from today
 const today = new Date();
