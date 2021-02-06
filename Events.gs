@@ -27,6 +27,7 @@ function parseTime(eventId, startDate, endDate, startYear, endYear) {
   startDate.setYear(startYear);
   endDate = new Date(endDate);
   endDate.setYear(endYear);
+  
   while (true) {
     try {
       let response = UrlFetchApp.fetch(url, headers).getContentText();
@@ -125,9 +126,16 @@ function parseResponse(response, sheet) {
 }
 
 function addToSheet(row, sheet) {
+  const startDate = new Date(row[itemToIndexMapping['startDate']]);
   const newRow = sheet.getLastRow() + 1;
+  const newTodayRow = todaySheet.getLastRow() + 1;
+
   for (let i = 1; i < rowItemsCount + 1; i++) {
     sheet.getRange(newRow, i).setValue(row[i - 1]);
+    // add to "Today" tab if start date matches today
+    if (startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()) {
+      todaySheet.getRange(newTodayRow, i).setValue(row[i - 1]);
+    }
   }
 }
 
@@ -139,6 +147,11 @@ function addToCalendar(row, same) {
 }
 
 function getAllEvents() {
+  // delete all rows in "Today" sheet
+  for (let rowCount = todaySheet.getLastRow(); rowCount > 1; rowCount--) {
+    todaySheet.deleteRow(rowCount);
+  }
+
   for (let i = 0; i < allCountries.length; i++) {
     added = new Set();
     const sheet = sheets[i];
@@ -156,9 +169,6 @@ function getAllEvents() {
         let url = `https://www.couchsurfing.com/events/search/${count}?search_query=${country}&start_date=${dates['todayYear']}-${dates['todayMonth']}-${dates['todayDate']}&end_date=${dates['futureYear']}-${dates['futureMonth']}-${dates['futureDate']}`;
 
         while (true) {
-          (async () => {
-            sleep(60000);
-          })();
           try {
             let response = UrlFetchApp.fetch(url, headers).getContentText();
 
@@ -183,8 +193,4 @@ function getAllEvents() {
     }
     sheet.sort(1);
   }
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
