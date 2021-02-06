@@ -1,458 +1,5 @@
-const calendarId = $CALENDAR_ID;
-
-const cookie = $COOKIE;
-
-const countries = [
-  "Afghanistan",
-  "Albania",
-  "Algeria",
-  "Andorra",
-  "Angola",
-  "Antigua+and+Barbuda",
-  "Argentina",
-  "Armenia",
-  "Australia",
-  "Austria",
-  "Azerbaijan",
-  "Bahamas",
-  "Bahrain",
-  "Bangladesh",
-  "Barbados",
-  "Belarus",
-  "Belgium",
-  "Belize",
-  "Benin",
-  "Bhutan",
-  "Bolivia",
-  "Bosnia+and+Herzegovina",
-  "Botswana",
-  "Brazil",
-  "Brunei",
-  "Bulgaria",
-  "Burkina+Faso",
-  "Burundi",
-  "Cabo+Verde",
-  "Cambodia",
-  "Cameroon",
-  "Canada",
-  "Central+African+Republic",
-  "Chad",
-  "Chile",
-  "China",
-  "Colombia",
-  "Comoros",
-  "Congo",
-  "Costa+Rica",
-  "Croatia",
-  "Cuba",
-  "Cyprus",
-  "Czech+Republic",
-  "Côte+d'Ivoire",
-  "Denmark",
-  "Djibouti",
-  "Dominica",
-  "Dominican+Republic",
-  "DR+Congo",
-  "Ecuador",
-  "Egypt",
-  "El+Salvador",
-  "Equatorial+Guinea",
-  "Eritrea",
-  "Estonia",
-  "Eswatini",
-  "Ethiopia",
-  "Fiji",
-  "Finland",
-  "France",
-  "Gabon",
-  "Gambia",
-  "Georgia",
-  "Germany",
-  "Ghana",
-  "Greece",
-  "Grenada",
-  "Guatemala",
-  "Guinea",
-  "Guinea-Bissau",
-  "Guyana",
-  "Haiti",
-  "Holy+See",
-  "Honduras",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Iran",
-  "Iraq",
-  "Ireland",
-  "Israe",
-  "Italy",
-  "Jamaica",
-  "Japan",
-  "Jordan",
-  "Kazakhstan",
-  "Kenya",
-  "Kiribati",
-  "Kuwait",
-  "Kyrgyzstan",
-  "Laos",
-  "Latvia",
-  "Lebanon",
-  "Lesotho",
-  "Liberia",
-  "Libya",
-  "Liechtenstein",
-  "Lithuania",
-  "Luxembourg",
-  "Madagascar",
-  "Malawi",
-  "Malaysia",
-  "Maldives",
-  "Mali",
-  "Malta",
-  "Marshall+Islands",
-  "Mauritania",
-  "Mauritius",
-  "Mexico",
-  "Micronesia",
-  "Moldova",
-  "Monaco",
-  "Mongolia",
-  "Montenegro",
-  "Morocco",
-  "Mozambique",
-  "Myanmar",
-  "Namibia",
-  "Nauru",
-  "Nepal",
-  "Netherlands",
-  "New+Zealand",
-  "Nicaragua",
-  "Niger",
-  "Nigeria",
-  "North+Korea",
-  "North+Macedonia",
-  "Norway",
-  "Oman",
-  "Pakistan",
-  "Palau",
-  "Panama",
-  "Papua+New+Guinea",
-  "Paraguay",
-  "Peru",
-  "Philippines",
-  "Poland",
-  "Portugal",
-  "Qatar",
-  "Romania",
-  "Russia",
-  "Rwanda",
-  "Saint+Kitts+and+Nevis",
-  "Saint+Lucia",
-  "Saint+Vincent+and+Grenadines",
-  "Samoa",
-  "San+Marino",
-  "Sao+Tome+and+Principe",
-  "Saudi+Arabia",
-  "Senegal",
-  "Serbia",
-  "Seychelles",
-  "Sierra+Leone",
-  "Singapore",
-  "Slovakia",
-  "Slovenia",
-  "Solomon+Islands",
-  "Somalia",
-  "South+Africa",
-  "South+Korea",
-  "South+Sudan",
-  "Spain",
-  "Sri+Lanka",
-  "State+of+Palestine",
-  "Sudan",
-  "Suriname",
-  "Sweden",
-  "Switzerland",
-  "Syria",
-  "Tajikistan",
-  "Tanzania",
-  "Thailand",
-  "Timor-Leste",
-  "Togo",
-  "Tonga",
-  "Trinidad+and+Tobago",
-  "Tunisia",
-  "Turkey",
-  "Turkmenistan",
-  "Tuvalu",
-  "Uganda",
-  "Ukraine",
-  "United+Arab+Emirates",
-  "United+Kingdom",
-  "United+States",
-  "Uruguay",
-  "Uzbekistan",
-  "Vanuatu",
-  "Venezuela",
-  "Vietnam",
-  "Yemen",
-  "Zambia",
-  "Zimbabwe",
-];
-
-const northAmerica = [
-  "Antigua+and+Barbuda",
-  "Bahamas",
-  "Barbados",
-  "Belize",
-  "Canada",
-  "Costa+Rica",
-  "Cuba",
-  "Dominica",
-  "Dominican+Republic",
-  "El+Salvador",
-  "Grenada",
-  "Guatemala",
-  "Haiti",
-  "Honduras",
-  "Jamaica",
-  "Mexico",
-  "Nicaragua",
-  "Panama",
-  "Saint+Kitts+and+Nevis",
-  "Saint+Lucia",
-  "Saint+Vincent+and+Grenadines",
-  "Trinidad+and+Tobago",
-  "United+States",
-];
-
-const southAmerica = [
-  "Argentina",
-  "Bolivia",  
-  "Brazil",
-  "Chile",
-  "Colombia",
-  "Ecuador",
-  "Guyana",
-  "Paraguay",
-  "Peru",
-  "Suriname", 
-  "Uruguay",  
-  "Venezuela"
-];
-
-const europe = [
-  "Albania",
-  "Andorra",
-  "Armenia",
-  "Austria",
-  "Azerbaijan",
-  "Belarus",
-  "Belgium",
-  "Bosnia+and+Herzegovina",
-  "Bulgaria",
-  "Croatia",
-  "Cyprus",
-  "Czechia",
-  "Denmark",
-  "Estonia",
-  "Finland",
-  "France",
-  "Georgia",
-  "Germany",
-  "Greece",
-  "Hungary",
-  "Iceland",
-  "Ireland",
-  "Israel",
-  "Italy",
-  "Kazakhstan",
-  "Kyrgyzstan",
-  "Latvia",
-  "Lithuania",
-  "Luxembourg",
-  "Malta",
-  "Monaco",
-  "Montenegro",
-  "Netherlands",
-  "North+Macedonia",
-  "Norway",
-  "Poland",
-  "Portugal",
-  "Moldova",
-  "Romania",
-  "Russia",
-  "San+Marino",
-  "Serbia",
-  "Slovakia",
-  "Slovenia",
-  "Spain",
-  "Sweden",
-  "Switzerland",
-  "Tajikistan",
-  "Turkey",
-  "Turkmenistan",
-  "United+Kingdom",
-  "Ukraine",
-  "Uzbekistan"
-];
-
-const africa = [
-  "Algeria",
-  "Angola",
-  "Benin",
-  "Botswana",
-  "Burkina+Faso",
-  "Burundi",
-  "Cameroon",
-  "Cabo+Verde",
-  "Central+African+Republic",
-  "Chad",
-  "Comoros",
-  "Côte+d'Ivoire",
-  "Djibouti",
-  "Egypt",
-  "Eritrea",
-  "Ethiopia",
-  "Gabon",
-  "Gambia",
-  "Ghana",
-  "Equatorial+Guinea",
-  "Guinea",
-  "Guinea-Bissa",
-  "Kenya",
-  "Sierra+Leone",
-  "Lesotho",
-  "Liberia",
-  "Libya",
-  "Madagascar",
-  "Malawi",
-  "Mali",
-  "Mauritania",
-  "Mauritius",
-  "Mayotte",
-  "Morocco",
-  "Mozambique",
-  "Namibia",
-  "Nigeria",
-  "Congo",
-  "Rwanda",
-  "Réunion",
-  "South+Africa",
-  "Senegal",
-  "Somalia",
-  "Sudan",
-  "Swaziland",
-  "Tanzania",
-  "Togo",
-  "Sao+Tome+and+Principe",
-  "Tunisia",
-  "Uganda",
-  "Zambia",
-  "Zimbabwe",
-];
-
-const asia = [
-  "Afghanistan",
-  "Armenia",
-  "Azerbaijan",
-  "Bahrain",
-  "Bangladesh",
-  "Bhutan",
-  "Brunei",
-  "Cambodia",
-  "China",
-  "Cyprus",
-  "Georgia",
-  "India",
-  "Indonesia",
-  "Iran",
-  "Iraq",
-  "Israel",
-  "Japan",
-  "Jordan",
-  "Kazakhstan",
-  "Kuwait",
-  "Kyrgyzstan",
-  "Laos",
-  "Lebanon",
-  "Malaysia",
-  "Maldives",
-  "Mongolia",
-  "Myanmar",
-  "Nepal",
-  "North+Korea",
-  "Oman",
-  "Pakistan",
-  "Philippines",
-  "Qatar",
-  "Saudi+Arabia",
-  "Singapore",
-  "South+Korea",
-  "Sri+Lanka",
-  "State+of+Palestine",
-  "Syria",
-  "Tajikistan",
-  "Thailand",
-  "Timor-Leste",
-  "Turkey",
-  "Turkmenistan",
-  "United+Arab+Emirates",
-  "Uzbekistan",
-  "Vietnam",
-  "Yemen",
-];
-
-const oceania = [
-  "Australia",
-  "Fiji",
-  "Kiribati",
-  "Marshall+Islands",
-  "Micronesia",
-  "Nauru",
-  "New+Zealand",
-  "Palau",
-  "Papua+New+Guinea",
-  "Samoa",
-  "Solomon+Islands",
-  "Tonga",
-  "Tuvalu",
-  "Vanuatu",
-];
-
-const today = new Date();
-const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
-const allCountries = [northAmerica, europe, southAmerica, oceania, africa, asia];
-
-const calendar = CalendarApp.getCalendarById(calendarId);
-const dates = {
-  'todayYear': today.getFullYear(),
-  'todayMonth': today.getMonth() + 1,
-  'todayDate': today.getDate(),
-  'futureYear': today.getFullYear(),
-  'futureMonth': today.getMonth() + 2,
-  'futureDate': today.getDate() - 1,
-}
-const future = new Date(dates['futureYear'], dates['futureMonth'], dates['futureDate']);
-let calendarDeleted = false;
-
-const rowItemsCount = 5;
-const itemToIndexMapping = {
-  'startDate': 0, 
-  'day': 1, 
-  'time': 2, 
-  'location': 3, 
-  'hyperlink': 4, 
-  'url': 5, 
-  'eventName': 6, 
-  'eventId': 7, 
-  'endDate': 8,
-  'startYear': 9,
-  'endYear': 10
-}
-
 let added = new Set();
-let addedCal = new Set();
+let calendarDeleted = false;
 
 function parseDay(number) {
   switch(number) {
@@ -475,23 +22,6 @@ function parseDay(number) {
 
 function parseTime(eventId, startDate, endDate, startYear, endYear) {
   let url = `https://www.couchsurfing.com/calendars/google/event/${eventId}`;
-  const headers = {
-    "headers": {
-      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-      "accept-language": "en-US,en;q=0.9",
-      "cache-control": "max-age=0",
-      "sec-fetch-dest": "document",
-      "sec-fetch-mode": "navigate",
-      "sec-fetch-site": "none",
-      "sec-fetch-user": "?1",
-      "upgrade-insecure-requests": "1",
-      "cookie": cookie
-    },
-    "referrerPolicy": "strict-origin-when-cross-origin",
-    "body": null,
-    "method": "GET",
-    "mode": "cors"
-  };
 
   startDate = new Date(startDate);
   startDate.setYear(startYear);
@@ -573,7 +103,7 @@ function parseResponse(response, sheet) {
 
     // add only if attendees exceed 5, not already added, and not ambassador event
     const same = startDate + eventName
-    if (parseInt(match[1]) >= 5 && !added.has(same) && !addedCal.has(same) && eventName.search('mbassador') < 0) {
+    if (parseInt(match[1]) >= 5 && !added.has(same) && eventName.search('mbassador') < 0) {
       addToSheet(row, sheet);
       if (!calendarDeleted) {
         calendarDeleted = true;
@@ -585,9 +115,8 @@ function parseResponse(response, sheet) {
           }
         });
       }
-      addToCalendar(row, same); // don't know why the earlier !addedCal.has(same) doesn't work so adding another check
+      addToCalendar(row, same); // don't know why the earlier !added.has(same) doesn't work so adding another check
       added.add(same);
-      addedCal.add(same);
     }
     return newResponse;
   } catch (err) {
@@ -603,7 +132,7 @@ function addToSheet(row, sheet) {
 }
 
 function addToCalendar(row, same) {
-  if (!addedCal.has(same)) {
+  if (!added.has(same)) {
     const times = parseTime(row[itemToIndexMapping['eventId']], row[itemToIndexMapping['startDate']], row[itemToIndexMapping['endDate']],row[itemToIndexMapping['startYear']], row[itemToIndexMapping['endYear']]);
     calendar.createEvent(row[itemToIndexMapping['eventName']], times[0], times[1], {location: row[itemToIndexMapping['location']], description: row[itemToIndexMapping['url']]});
   }
@@ -612,11 +141,10 @@ function addToCalendar(row, same) {
 function getAllEvents() {
   for (let i = 0; i < allCountries.length; i++) {
     added = new Set();
-    addedCal = new Set();
     const sheet = sheets[i];
 
     // delete all rows just in case events got updated
-    for (let rowCount = sheet.getLastRow(); rowCount > (i == 0 ? 2 : 1); rowCount--) {
+    for (let rowCount = sheet.getLastRow(); rowCount > 1; rowCount--) {
       sheet.deleteRow(rowCount);
     }
 
@@ -626,23 +154,6 @@ function getAllEvents() {
       const country = allCountries[i][j];
       while (count < page) {
         let url = `https://www.couchsurfing.com/events/search/${count}?search_query=${country}&start_date=${dates['todayYear']}-${dates['todayMonth']}-${dates['todayDate']}&end_date=${dates['futureYear']}-${dates['futureMonth']}-${dates['futureDate']}`;
-        const headers = {
-          "referrerPolicy": "strict-origin-when-cross-origin",
-          "body": null,
-          "method": "GET",
-          "mode": "cors",
-          "headers":{
-            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-            "accept-language": "en-US,en;q=0.9",
-            "cache-control": "max-age=0",
-            "sec-fetch-dest": "document",
-            "sec-fetch-mode": "navigate",
-            "sec-fetch-site": "same-origin",
-            "sec-fetch-user": "?1",
-            "upgrade-insecure-requests": "1",
-            "cookie": cookie
-            }
-          };
 
         while (true) {
           (async () => {
@@ -670,7 +181,6 @@ function getAllEvents() {
         }
       }
     }
-
     sheet.sort(1);
   }
 }
