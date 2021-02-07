@@ -126,16 +126,10 @@ function parseResponse(response, sheet) {
 }
 
 function addToSheet(row, sheet) {
-  const startDate = new Date(row[itemToIndexMapping['startDate']]);
   const newRow = sheet.getLastRow() + 1;
-  const newTodayRow = todaySheet.getLastRow() + 1;
 
   for (let i = 1; i < rowItemsCount + 1; i++) {
     sheet.getRange(newRow, i).setValue(row[i - 1]);
-    // add to "Today" tab if start date matches today
-    if (startDate.getMonth() == today.getMonth() && startDate.getDate() == today.getDate()) {
-      todaySheet.getRange(newTodayRow, i).setValue(row[i - 1]);
-    }
   }
 }
 
@@ -147,11 +141,6 @@ function addToCalendar(row, same) {
 }
 
 function getAllEvents() {
-  // delete all rows in "Today" sheet
-  for (let rowCount = todaySheet.getLastRow(); rowCount > 1; rowCount--) {
-    todaySheet.deleteRow(rowCount);
-  }
-
   for (let i = 0; i < allCountries.length; i++) {
     added = new Set();
     const sheet = sheets[i];
