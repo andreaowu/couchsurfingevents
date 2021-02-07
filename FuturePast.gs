@@ -11,7 +11,7 @@ function moveToPast() {
     todaySheet.deleteRow(rowCount);
   }
 
-  for (let i = 0; i < sheets.length - 1; i++) {
+  for (let i = 0; i < sheets.length - 2; i++) {
     const future = sheets[i];
     var index = 1;
     while (index < future.getDataRange().getValues().length - 1 && future.getDataRange().getValues()[index][0] != "") {
@@ -29,5 +29,5 @@ function moveToPast() {
     }
   }
 
-  past.sort(1);
+  pastSheet.sort(1);
 }
