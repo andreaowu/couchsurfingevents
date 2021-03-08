@@ -1,9 +1,15 @@
-// Moves all past events from "Future" tab to "Past" tab
+/**
+ * Moves all past events from "Future" tab to "Past" tab.
+ * 
+ * Copyright 2021, Andrea Wu, All rights reserved.
+ */
+
 function moveToPast() {
   const active = SpreadsheetApp.getActiveSpreadsheet();
   const pastSheet = active.getSheetByName("Past");
   const todaySheet = active.getSheetByName("Today");
-  const today = Utilities.formatDate(new Date(), "GMT", "MM/dd/yyyy");
+  const todayDate = new Date();
+  const today = Utilities.formatDate(todayDate, "GMT", "MM/dd/yyyy");
   const sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
 
   // delete all rows in "Today" sheet
@@ -11,7 +17,14 @@ function moveToPast() {
     todaySheet.deleteRow(rowCount);
   }
 
-  for (let i = 0; i < sheets.length - 2; i++) {
+  // delete rows in past and all sheet
+  let rowCount = 2;
+  while (pastSheet.getRange("A2").getValues()[0][0].getDay() < todayDate.getDay()) {
+    pastSheet.deleteRow(rowCount);
+    allSheet.deleteRow(rowCount);
+  }
+
+  for (let i = 0; i < allCountries.length; i++) {
     const future = sheets[i];
     var index = 1;
     while (index < future.getDataRange().getValues().length - 1 && future.getDataRange().getValues()[index][0] != "") {
