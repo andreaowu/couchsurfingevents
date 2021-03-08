@@ -1,3 +1,10 @@
+/**
+ * Gets Couchsurfing events from the website to populate a
+ * spreadsheet and calendar.
+ * 
+ * Copyright 2021, Andrea Wu, All rights reserved.
+ */
+
 let added = new Set();
 let calendarDeleted = false;
 
@@ -105,6 +112,7 @@ function parseResponse(response, sheet) {
     // add only if attendees exceed 5, not already added, and not ambassador event
     const same = startDate + eventName
     if (parseInt(match[1]) >= 5 && !added.has(same) && eventName.search('mbassador') < 0) {
+      added.add(same);
       addToSheet(row, sheet);
       if (!calendarDeleted) {
         calendarDeleted = true;
@@ -116,8 +124,7 @@ function parseResponse(response, sheet) {
           }
         });
       }
-      addToCalendar(row, same); // don't know why the earlier !added.has(same) doesn't work so adding another check
-      added.add(same);
+      addToCalendar(row); // don't know why the earlier !added.has(same) doesn't work so adding another check
     }
     return newResponse;
   } catch (err) {
@@ -127,28 +134,35 @@ function parseResponse(response, sheet) {
 
 function addToSheet(row, sheet) {
   const newRow = sheet.getLastRow() + 1;
+  const allRow = allSheet.getLastRow() + 1;
 
   for (let i = 1; i < rowItemsCount + 1; i++) {
     sheet.getRange(newRow, i).setValue(row[i - 1]);
+    allSheet.getRange(allRow, i).setValue(row[i - 1]);
   }
 }
 
-function addToCalendar(row, same) {
-  if (!added.has(same)) {
-    const times = parseTime(row[itemToIndexMapping['eventId']], row[itemToIndexMapping['startDate']], row[itemToIndexMapping['endDate']],row[itemToIndexMapping['startYear']], row[itemToIndexMapping['endYear']]);
-    calendar.createEvent(row[itemToIndexMapping['eventName']], times[0], times[1], {location: row[itemToIndexMapping['location']], description: row[itemToIndexMapping['url']]});
+function addToCalendar(row) {
+  const times = parseTime(row[itemToIndexMapping['eventId']], row[itemToIndexMapping['startDate']], row[itemToIndexMapping['endDate']],row[itemToIndexMapping['startYear']], row[itemToIndexMapping['endYear']]);
+  calendar.createEvent(row[itemToIndexMapping['eventName']], times[0], times[1], {location: row[itemToIndexMapping['location']], description: row[itemToIndexMapping['url']]});
+}
+
+function clean(sheet) {
+  for (let rowCount = sheet.getLastRow(); rowCount > 1; rowCount--) {
+    sheet.deleteRow(rowCount);
   }
 }
 
 function getAllEvents() {
+  // delete all rows in all sheet
+  clean(allSheet);
+
   for (let i = 0; i < allCountries.length; i++) {
     added = new Set();
     const sheet = sheets[i];
 
     // delete all rows just in case events got updated
-    for (let rowCount = sheet.getLastRow(); rowCount > 1; rowCount--) {
-      sheet.deleteRow(rowCount);
-    }
+    clean(sheet);
 
     for (let j = 0; j < allCountries[i].length; j++) {
       let count = 1;
@@ -182,4 +196,5 @@ function getAllEvents() {
     }
     sheet.sort(1);
   }
+  allSheet.sort(1);
 }
